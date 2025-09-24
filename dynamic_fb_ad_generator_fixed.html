@@ -536,18 +536,46 @@ function needsProfessionalPrefix(serviceLabel){
       navigator.clipboard?.writeText(url).then(()=>alert('Shareable URL copied!')).catch(()=>alert(url));
     }
 
-    // Wire up buttons
-    document.getElementById('btn-generate-copy').addEventListener('click', generateCopy);
-    document.getElementById('generateBtn').addEventListener('click', generateImage);
-    document.getElementById('downloadBtn').addEventListener('click', downloadImage);
-    document.getElementById('copyUrlBtn').addEventListener('click', copyShareableURL);
+   // ========== Wire up buttons ==========
+document.getElementById('btn-generate-copy')?.addEventListener('click', generateSpecificCopy);
+document.getElementById('generateBtn')?.addEventListener('click', generateImage);
+document.getElementById('downloadBtn')?.addEventListener('click', downloadImage);
+document.getElementById('copyUrlBtn')?.addEventListener('click', copyShareableURL);
 
-    // Init
-    window.addEventListener('DOMContentLoaded', ()=>{
-      const shouldRun = populateFromURL();
-      generateColorPalette();
-      if(shouldRun){ generateCopy(); setTimeout(()=>{ try{ generateImage(); }catch(e){} }, 200); }
-    });
+// Live color preview: regenerate palette + redraw canvas
+['primaryColor', 'secondaryColor'].forEach(id => {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.addEventListener('input', () => {
+    generateColorPalette();
+    if (currentCopySet && currentCopySet.length) generateImage();
+  });
+});
+
+// Background image upload
+let backgroundImg = null;
+document.getElementById('bgImage')?.addEventListener('change', (e) => {
+  const file = e.target.files?.[0];
+  if (!file) return;
+  const url = URL.createObjectURL(file);
+  const img = new Image();
+  img.onload = () => {
+    backgroundImg = img;
+    URL.revokeObjectURL(url);
+    if (currentCopySet && currentCopySet.length) generateImage();
+  };
+  img.src = url;
+});
+
+// ========== Init ==========
+window.addEventListener('DOMContentLoaded', () => {
+  const hasParams = populateFromURL();
+  generateColorPalette();
+
+  // Load presets; autorun happens INSIDE loadPresets() after JSON is ready
+  loadPresets();
+});
+
 	// ===== Load industry presets from presets.json =====
 let industryPresets = {};
 
