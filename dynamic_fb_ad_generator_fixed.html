@@ -301,14 +301,24 @@ function serviceName(industry){
   };
   return map[industry] || "Professional Service";
 }
+// Helper: avoid "Professional Professional"
+function needsProfessionalPrefix(serviceLabel){
+  return !/professional|licensed|certified|trusted/i.test(serviceLabel);
+}
 
 
     function genHeadline(type, industry, company, area){
       const s = displayServiceName(industry);
-      if(type==='professional'){
-        const opts=[`Professional ${s} You Can Trust`,`Licensed ${s} Serving ${area||'Your Area'}`,`${company||'Your Company'} — ${s} Experts`];
-        return opts[Math.floor(Math.random()*opts.length)];
-      }
+  if(type==='professional'){
+  const lead = needsProfessionalPrefix(s) ? `Professional ${s}` : s;
+  const opts=[
+    `${lead} You Can Trust`,
+    `Licensed ${s} Serving ${area||'Your Area'}`,
+    `${company||'Your Company'} – ${s} Experts`
+  ];
+  return opts[Math.floor(Math.random()*opts.length)];
+}
+
       if(type==='trustworthy'){
         const opts=[`Trusted by 500+ Local Customers`,`Licensed ${s} Since 2004`,`Your Local ${s} Specialists`];
         return opts[Math.floor(Math.random()*opts.length)];
@@ -317,12 +327,19 @@ function serviceName(industry){
       return opts[Math.floor(Math.random()*opts.length)];
     }
 
-    function genSubhead(type, industry, area){
-      const s = displayServiceName(industry);
-      if(type==='professional') return `Professional ${s.toLowerCase()} for residential and commercial properties in ${area||'your area'}.`;
-      if(type==='trustworthy') return `Years of reliable ${s.toLowerCase()} across ${area||'the region'}. Licensed, insured, satisfaction guaranteed.`;
-      return `When you need ${s.toLowerCase()} fast, we're here 24/7 with upfront pricing and guaranteed satisfaction.`;
-    }
+  function genSubhead(type, industry, area){
+  const s = displayServiceName(industry);
+  const lead = needsProfessionalPrefix(s) ? `Professional ${s.toLowerCase()}` : s.toLowerCase();
+
+  if(type==='professional') 
+    return `${lead} for residential and commercial properties in ${area||'your area'}.`;
+
+  if(type==='trustworthy') 
+    return `Years of reliable ${s.toLowerCase()} across ${area||'the region'}. Licensed, insured, satisfaction guaranteed.`;
+
+  return `When you need ${s.toLowerCase()} fast, we're here 24/7 with upfront pricing and guaranteed satisfaction.`;
+}
+
 
     function genValueProp(){
       const list=[
