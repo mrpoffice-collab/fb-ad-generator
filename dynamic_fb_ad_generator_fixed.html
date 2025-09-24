@@ -468,10 +468,38 @@ if (backgroundImg) {
       }
       ctx.fillText(name,60,y); y+=60;
 
-    ctx.font = '24px Arial, sans-serif';
-const sName = displayServiceName(industry);
-const lead  = needsProfessionalPrefix(sName) ? `Professional ${sName}` : sName;
-ctx.globalAlpha = .9;
+// Tagline line (no external helpers needed)
+ctx.font = '24px Arial, sans-serif';
+
+// 1) Get a base service name (prefer presets if you have them)
+let base =
+  (window.industryPresets &&
+   window.industryPresets[industry] &&
+   window.industryPresets[industry].friendly_name)
+    ? window.industryPresets[industry].friendly_name
+    : (function serviceBaseName(i){
+        const map = {
+          hvac:"HVAC Service", plumbing:"Plumbing Service", electrical:"Electrical Service",
+          roofing:"Roofing Service", landscaping:"Landscaping Service", cleaning:"Cleaning Service",
+          automotive:"Auto Service", dental:"Dental Care", medical:"Medical Care", legal:"Legal Service",
+          real_estate:"Real Estate Service", restaurant:"Restaurant Service", retail:"Retail Service",
+          fitness:"Fitness Service", beauty:"Beauty Service", pet_services:"Pet Service",
+          home_services:"Home Service", dock_repair:"Dock Repair Service", professional:"Professional Service"
+        };
+        return map[i] || "Professional Service";
+      })(industry);
+
+// 2) Remove a *leading* "Professional " if it's already there
+const clean = String(base).replace(/^\s*Professional\s+/i, '').trim();
+
+// 3) If the original *started* with "Professional", keep it as-is.
+//    Otherwise, prepend one "Professional ".
+const lead =
+  /^\s*Professional\b/i.test(String(base).trim())
+    ? String(base).trim()
+    : `Professional ${clean}`;
+
+ctx.globalAlpha = 0.9;
 ctx.fillText(area ? `${lead} • Serving ${area}` : lead, 60, y);
 ctx.globalAlpha = 1.0;
 y += 80;
