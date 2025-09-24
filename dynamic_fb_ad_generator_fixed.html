@@ -557,6 +557,14 @@ function applyPreset(industryKey) {
   const preset = industryPresets[industryKey];
   if (!preset) return;
 
+  // ✅ sync the dropdown so later code reads the right industry
+  const sel = document.getElementById('industry');
+  if (sel) {
+    sel.value = industryKey;
+    // if you have onchange handlers that adjust UI:
+    if (typeof sel.onchange === 'function') sel.onchange();
+  }
+
   document.getElementById("mainTitle").textContent =
     preset.friendly_name + " Facebook Ad Generator";
   document.getElementById("industryBadge").textContent = preset.friendly_name;
@@ -565,6 +573,7 @@ function applyPreset(industryKey) {
   if (preset.primary_goals) updateSelectOptions("marketingGoal", preset.primary_goals);
   if (preset.common_pain_points) updateSelectOptions("painPoint", preset.common_pain_points);
 }
+
 
 function updateSelectOptions(selectId, options) {
   const select = document.getElementById(selectId);
