@@ -1,0 +1,321 @@
+{
+  "property_home_maintenance": {
+    "industry_key": "property_home_maintenance",
+    "friendly_name": "Property & Home Maintenance",
+    "short_description": "Handyman, home watch, pressure washing, gutter cleaning & seasonal upkeep.",
+    "audiences": [
+      {"id":"homeowners","label":"Homeowners"},
+      {"id":"landlords","label":"Landlords & Property Owners"},
+      {"id":"hoa_boards","label":"HOA/Community Boards"}
+    ],
+    "primary_goals": [
+      {"id":"consultation","label":"Consultation & Quotes"},
+      {"id":"maintenance","label":"Ongoing Maintenance Plans"},
+      {"id":"emergency_service","label":"Emergency Repairs"}
+    ],
+    "common_pain_points": [
+      {"id":"no_time","label":"No time to maintain"},
+      {"id":"seasonal_damage","label":"Seasonal/weather damage"},
+      {"id":"trust_quality","label":"Unsure who to trust"}
+    ],
+    "headline_templates": [
+      "{{company}}: Reliable Home Upkeep",
+      "Seasonal Care, Done Right",
+      "Trusted Handyman in {{area}}",
+      "Protect Your Home This Season",
+      "One Call Handles It All"
+    ],
+    "subhead_templates": [
+      "From home watch to gutter repair—licensed pros serving {{area}}.",
+      "Prevent pricey repairs with scheduled maintenance you can trust.",
+      "Exterior cleaning & small fixes that boost curb appeal fast."
+    ],
+    "value_props": [
+      "Licensed & insured • Clear, upfront pricing",
+      "Home watch checklists & photo reports",
+      "Pressure wash, gutters, minor repairs—one team",
+      "Seasonal prep to prevent costly damage"
+    ],
+    "cta_options": ["GET QUOTE","SCHEDULE TODAY","CALL NOW","BOOK INSPECTION"]
+  },
+
+  "plumbing_hvac_electrical": {
+    "industry_key": "plumbing_hvac_electrical",
+    "friendly_name": "Plumbing, HVAC & Electrical",
+    "short_description": "Repairs, installs, tune-ups, and generator/electrical services.",
+    "audiences": [
+      {"id":"homeowners","label":"Homeowners"},
+      {"id":"property_managers","label":"Property Managers"},
+      {"id":"small_business","label":"Small Businesses"}
+    ],
+    "primary_goals": [
+      {"id":"emergency_service","label":"Emergency Service"},
+      {"id":"installation","label":"Install/Replacement"},
+      {"id":"maintenance","label":"Seasonal Tune-Ups"}
+    ],
+    "common_pain_points": [
+      {"id":"no_heat_cool","label":"No heat/cooling or leaks"},
+      {"id":"high_bills","label":"High energy/water bills"},
+      {"id":"power_issues","label":"Outages or panel issues"}
+    ],
+    "headline_templates": [
+      "Fast, Licensed Repairs—{{area}}",
+      "{{company}}: Fixes That Last",
+      "No Heat? No Problem.",
+      "Stop Leaks. Save Bills.",
+      "Generator Installs You Trust"
+    ],
+    "subhead_templates": [
+      "24/7 emergency plumbing, HVAC & electrical—serving {{area}}.",
+      "Tune-ups, installs, and repairs with honest pricing.",
+      "Stay comfortable & safe. Certified technicians on call."
+    ],
+    "value_props": [
+      "Same-day service • Fully licensed & insured",
+      "Upfront quotes • No surprise fees",
+      "High-efficiency installs to cut bills",
+      "Generator installs & panel upgrades"
+    ],
+    "cta_options": ["CALL NOW","GET QUOTE","BOOK TUNE-UP","SCHEDULE SERVICE"]
+  },
+
+  "cleaning_restoration": {
+    "industry_key": "cleaning_restoration",
+    "friendly_name": "Cleaning & Restoration",
+    "short_description": "Residential/commercial cleaning, carpet/upholstery, water/fire/mold remediation, STR turns.",
+    "audiences": [
+      {"id":"homeowners","label":"Homeowners"},
+      {"id":"facility_managers","label":"Facility Managers"},
+      {"id":"hosts","label":"Vacation Rental Hosts"}
+    ],
+    "primary_goals": [
+      {"id":"bookings","label":"Book a Cleaning"},
+      {"id":"inspection","label":"Free Inspection/Assessment"},
+      {"id":"emergency","label":"Emergency Remediation"}
+    ],
+    "common_pain_points": [
+      {"id":"stains_odors","label":"Stains & odors"},
+      {"id":"mold_moisture","label":"Mold & moisture issues"},
+      {"id":"turnover_speed","label":"Slow turnovers"}
+    ],
+    "headline_templates": [
+      "Deep Clean, Real Results",
+      "Restore Fast After Damage",
+      "Fresh Carpets. Fresh Start.",
+      "Mold Problem? We Can Help.",
+      "Turnovers Done Right"
+    ],
+    "subhead_templates": [
+      "Professional crews for homes, offices & STRs in {{area}}.",
+      "Water/fire/mold remediation—rapid response, certified techs.",
+      "Carpet & upholstery cleaning that actually lifts stains."
+    ],
+    "value_props": [
+      "Certified remediation • Insurance-friendly reports",
+      "Flexible schedules for STR turnovers",
+      "Non-toxic products available",
+      "Before/after photo proof"
+    ],
+    "cta_options": ["GET ESTIMATE","BOOK TODAY","CALL NOW","REQUEST INSPECTION"]
+  },
+
+  "remodeling_construction": {
+    "industry_key": "remodeling_construction",
+    "friendly_name": "Remodeling & Construction",
+    "short_description": "General remodeling, kitchens/baths, decks/docks/additions, basements.",
+    "audiences": [
+      {"id":"homeowners","label":"Homeowners"},
+      {"id":"investors","label":"Investors/Flippers"},
+      {"id":"design_build","label":"Design-Build Clients"}
+    ],
+    "primary_goals": [
+      {"id":"consultation","label":"Free Design Consult"},
+      {"id":"estimate","label":"Get Project Estimate"},
+      {"id":"site_visit","label":"On-Site Visit"}
+    ],
+    "common_pain_points": [
+      {"id":"timeline","label":"Unclear timelines"},
+      {"id":"overruns","label":"Budget overruns"},
+      {"id":"quality","label":"Quality concerns"}
+    ],
+    "headline_templates": [
+      "Love Your Home Again",
+      "Kitchens & Baths by {{company}}",
+      "Add Space. Add Value.",
+      "Custom Decks & Docks",
+      "Basements Built to Enjoy"
+    ],
+    "subhead_templates": [
+      "Licensed remodelers delivering on time & on budget in {{area}}.",
+      "From design to finish—clear plans, clean work, great results.",
+      "Transparent estimates. Craftsmanship you can see."
+    ],
+    "value_props": [
+      "Design-build process • Single point of contact",
+      "Detailed bid & schedule up front",
+      "Quality materials & warranties",
+      "Clean job sites, respectful crews"
+    ],
+    "cta_options": ["GET ESTIMATE","BOOK CONSULT","SCHEDULE SITE VISIT","START YOUR PROJECT"]
+  },
+
+  "roofing_exterior": {
+    "industry_key": "roofing_exterior",
+    "friendly_name": "Roofing & Exterior Services",
+    "short_description": "Roofing, siding, windows/doors, exterior painting & drywall repair.",
+    "audiences": [
+      {"id":"homeowners","label":"Homeowners"},
+      {"id":"insurance_claims","label":"Insurance Claim Clients"},
+      {"id":"property_managers","label":"Property Managers"}
+    ],
+    "primary_goals": [
+      {"id":"inspection","label":"Free Roof/Exterior Inspection"},
+      {"id":"replacement","label":"Replacement Estimate"},
+      {"id":"repair","label":"Schedule Repair"}
+    ],
+    "common_pain_points": [
+      {"id":"storm_damage","label":"Storm/hail damage"},
+      {"id":"leaks_drafts","label":"Leaks & drafts"},
+      {"id":"curb_appeal","label":"Poor curb appeal"}
+    ],
+    "headline_templates": [
+      "Storm Damage? We Inspect Free",
+      "Leaks? Call {{company}}",
+      "New Roof, New Look",
+      "Siding That Lasts",
+      "Window & Door Upgrades"
+    ],
+    "subhead_templates": [
+      "Insurance-friendly inspections & estimates in {{area}}.",
+      "Quality installs that boost efficiency & curb appeal.",
+      "Fast, clean crews—most jobs in a day or two."
+    ],
+    "value_props": [
+      "HAAG-certified inspections • Photo reports",
+      "Lifetime shingle options • Financing available",
+      "Energy-efficient windows & doors",
+      "Warranty-backed workmanship"
+    ],
+    "cta_options": ["CALL NOW","GET INSPECTION","REQUEST ESTIMATE","SCHEDULE REPAIR"]
+  },
+
+  "flooring_interior": {
+    "industry_key": "flooring_interior",
+    "friendly_name": "Flooring & Interior Finishes",
+    "short_description": "Tile, hardwood, carpet, laminate; interior paint and drywall finish.",
+    "audiences": [
+      {"id":"homeowners","label":"Homeowners"},
+      {"id":"realtors","label":"Realtors/Home Prep"},
+      {"id":"property_managers","label":"Property Managers"}
+    ],
+    "primary_goals": [
+      {"id":"estimate","label":"Free Measure & Estimate"},
+      {"id":"consultation","label":"Design/Material Consult"},
+      {"id":"install","label":"Schedule Install"}
+    ],
+    "common_pain_points": [
+      {"id":"outdated","label":"Outdated finishes"},
+      {"id":"durability","label":"Low durability"},
+      {"id":"mess","label":"Messy contractors"}
+    ],
+    "headline_templates": [
+      "Floors You’ll Love",
+      "Fresh Paint, Fresh Start",
+      "Tile & Hardwood Pros",
+      "Carpet That Fits Life",
+      "Seamless Drywall Finishes"
+    ],
+    "subhead_templates": [
+      "Beautiful, durable materials installed cleanly in {{area}}.",
+      "Design help, fair pricing, on-time installs.",
+      "From prep to finish—no dust drama."
+    ],
+    "value_props": [
+      "Premium materials • Pro installation",
+      "Design guidance & samples",
+      "Clean job sites • On-schedule",
+      "Warranty on labor & materials"
+    ],
+    "cta_options": ["GET MEASURE","BOOK CONSULT","REQUEST QUOTE","SCHEDULE INSTALL"]
+  },
+
+  "landscape_outdoor": {
+    "industry_key": "landscape_outdoor",
+    "friendly_name": "Lawn, Landscape & Outdoor",
+    "short_description": "Lawn care, tree services, hardscapes, and irrigation installs/maintenance.",
+    "audiences": [
+      {"id":"homeowners","label":"Homeowners"},
+      {"id":"estates","label":"Estates & HOAs"},
+      {"id":"commercial","label":"Commercial Properties"}
+    ],
+    "primary_goals": [
+      {"id":"maintenance","label":"Seasonal/Lawn Maintenance"},
+      {"id":"design_build","label":"Landscape Design & Build"},
+      {"id":"tree_service","label":"Tree Trimming/Removal"}
+    ],
+    "common_pain_points": [
+      {"id":"overgrowth","label":"Overgrowth & mess"},
+      {"id":"drainage","label":"Poor drainage/irrigation"},
+      {"id":"curb_appeal","label":"Low curb appeal"}
+    ],
+    "headline_templates": [
+      "Curb Appeal Starts Here",
+      "Healthy Lawns, Happy Homes",
+      "Tree Pros You Can Trust",
+      "Patios, Walls & Fire Pits",
+      "Smart Irrigation Installs"
+    ],
+    "subhead_templates": [
+      "Weekly lawn care, tree work & hardscapes in {{area}}.",
+      "Design-build outdoor spaces—done right and on schedule.",
+      "Irrigation tuned for health & water savings."
+    ],
+    "value_props": [
+      "Seasonal plans • Reliable crews",
+      "Certified arborists for tree work",
+      "Stone, pavers & outdoor kitchens",
+      "Irrigation install, repair & winterize"
+    ],
+    "cta_options": ["GET QUOTE","BOOK MAINTENANCE","SCHEDULE TREE WORK","START DESIGN"]
+  },
+
+  "lake_specialty": {
+    "industry_key": "lake_specialty",
+    "friendly_name": "Specialty Lake-Area Services",
+    "short_description": "Dock repair/remodel, seawalls/shoreline stabilization, boat lifts, seasonal inspections.",
+    "audiences": [
+      {"id":"lakefront_homeowners","label":"Lakefront Homeowners"},
+      {"id":"marinas","label":"Marinas & Resorts"},
+      {"id":"hoa_boards","label":"HOAs & Associations"}
+    ],
+    "primary_goals": [
+      {"id":"inspection","label":"Seasonal Inspections"},
+      {"id":"repair","label":"Dock/Seawall Repair"},
+      {"id":"installation","label":"Lift/Accessory Install"}
+    ],
+    "common_pain_points": [
+      {"id":"storm_damage","label":"Storm damage"},
+      {"id":"erosion","label":"Erosion & shoreline loss"},
+      {"id":"safety","label":"Loose boards & safety"}
+    ],
+    "headline_templates": [
+      "Storm-Damaged Dock? Call {{company}}",
+      "Protect Your Shoreline",
+      "Boat Lift Installs & Service",
+      "Seasonal Lake Home Inspections",
+      "Licensed Dock Pros in {{area}}"
+    ],
+    "subhead_templates": [
+      "Certified marine contractors • Repairs, remodels & accessories.",
+      "Seawalls & stabilization that stand up to weather.",
+      "Seasonal checklists with photos—prevent big repairs."
+    ],
+    "value_props": [
+      "Emergency response • Insurance assistance",
+      "Engineered seawalls & erosion control",
+      "Lift installs, upgrades & maintenance",
+      "Safety-first inspections with photo reports"
+    ],
+    "cta_options": ["CALL NOW","GET QUOTE","BOOK INSPECTION","SCHEDULE SERVICE"]
+  }
+}

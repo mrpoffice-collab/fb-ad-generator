@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Universal Facebook Ad Generator — Dynamic (Fixed)</title>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; margin:0; padding:20px; background: linear-gradient(135deg,#667eea,#764ba2); min-height:100vh; }
+    .container { max-width: 1000px; margin: 0 auto; background:#fff; border-radius:16px; box-shadow:0 20px 40px rgba(0,0,0,0.1); overflow:hidden; }
+    .header { background: linear-gradient(135deg,#667eea,#764ba2); color:#fff; padding:30px; text-align:center; }
+    .header h1 { margin:0; font-size:2rem; font-weight:700; }
+    .header p { margin:8px 0 0 0; opacity:.9 }
+    .industry-badge { background: rgba(255,255,255,.2); padding:8px 16px; border-radius:20px; display:inline-block; margin-top:10px; font-weight:600; }
+    .form-section { padding: 24px 30px 30px; }
+    .form-row { display:grid; grid-template-columns: 1fr 1fr; gap:20px; }
+    @media (max-width: 768px){ .form-row{ grid-template-columns:1fr; } }
+    .form-group{ margin-bottom:18px; }
+    label{ display:block; font-weight:600; margin-bottom:6px; color:#2c3e50; }
+    input,select,textarea{ width:100%; padding:12px 14px; border:2px solid #e0e6ed; border-radius:8px; font-size:1rem; box-sizing:border-box; }
+    input:focus,select:focus,textarea:focus{ outline:none; border-color:#667eea; }
+    .edit-hint{ font-size:.85rem; color:#666; margin-top:4px; font-style: italic; }
+    .button-group{ display:flex; gap:12px; flex-wrap:wrap; margin: 22px 0; }
+    button{ background: linear-gradient(135deg,#667eea,#764ba2); color:#fff; border:none; padding:12px 18px; border-radius:8px; cursor:pointer; font-weight:600; }
+    button:disabled{ opacity:.6; cursor:not-allowed; }
+    .secondary-btn{ background: linear-gradient(135deg,#95a5a6,#7f8c8d); }
+    .copy-preview{ background:#f8f9fa; border:2px solid #e9ecef; border-radius:12px; padding:20px; margin:20px 0; display:none; }
+    .copy-item{ margin:12px 0; padding:12px; background:#fff; border-radius:8px; border-left:4px solid #667eea; }
+    .copy-edit{ width:100%; border:1px solid #ddd; border-radius:6px; padding:8px; font-size:1rem; background:#fafafa; }
+    .copy-edit.headline{ font-weight:700; font-size:1.1rem; }
+    .copy-stats{ font-size:.85rem; color:#666; margin-top:6px; }
+    .canvas-container{ text-align:center; padding:16px; background:#f8f9fa; border-radius:12px; margin:16px 0; }
+    canvas{ border:2px solid #e9ecef; border-radius:12px; max-width:100%; height:auto; box-shadow:0 10px 30px rgba(0,0,0,.1); }
+    .url-tip{ background:#e8f4fd; border:2px solid #667eea; padding:12px; border-radius:10px; margin:16px 0; font-size:.95rem; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1 id="mainTitle">Universal Facebook Ad Generator</h1>
+      <p>Dynamic, URL-powered brief • One file, any client</p>
+      <div class="industry-badge" id="industryBadge">Professional Services</div>
+    </div>
+
+    <div class="form-section">
+      <div class="url-tip">
+        Paste params after the file URL, e.g.: <code>?company=Summit%20Bookkeeping&phone=5551239876&hex=1e90ff&area=Springfield&season=fall&ad=professional&audience=small%20business%20owners&goal=new%20clients&pain=messy%20books&layout=card-left&autorun=1</code>
+      </div>
+
+      <form id="pngForm">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="companyName">Company Name</label>
+            <input id="companyName" placeholder="Your Business Name"/>
+          </div>
+          <div class="form-group">
+            <label for="phoneNumber">Phone Number</label>
+            <input id="phoneNumber" placeholder="(555) 123-4567"/>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="industry">Industry</label>
+            <select id="industry">
+              <option value="professional">Professional Services</option>
+              <option value="hvac">HVAC & Climate Control</option>
+              <option value="plumbing">Plumbing Services</option>
+              <option value="electrical">Electrical Services</option>
+              <option value="roofing">Roofing & Construction</option>
+              <option value="landscaping">Landscaping & Lawn Care</option>
+              <option value="cleaning">Cleaning Services</option>
+              <option value="automotive">Automotive Services</option>
+              <option value="dental">Dental Practice</option>
+              <option value="medical">Medical Practice</option>
+              <option value="legal">Legal Services</option>
+              <option value="real_estate">Real Estate</option>
+              <option value="restaurant">Restaurant & Food</option>
+              <option value="retail">Retail Business</option>
+              <option value="fitness">Fitness & Health</option>
+              <option value="beauty">Beauty & Wellness</option>
+              <option value="pet_services">Pet Services</option>
+              <option value="home_services">Home Services</option>
+              <option value="dock_repair">Dock Repair</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="serviceArea">Service Area</label>
+            <input id="serviceArea" placeholder="City, State or Region"/>
+            <div class="edit-hint">List specific cities or regions you service</div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="primaryColor">Primary Brand Color</label>
+            <input type="color" id="primaryColor" value="#667eea"/>
+          </div>
+          <div class="form-group">
+            <label for="secondaryColor">Secondary Color (Optional)</label>
+            <input type="color" id="secondaryColor" value="#764ba2"/>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="adType">Choose Ad Type</label>
+          <select id="adType">
+            <option value="professional">Professional & Reliable</option>
+            <option value="trustworthy">Trustworthy & Established</option>
+            <option value="emergency">Urgent & Problem-Solving</option>
+          </select>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="targetAudience">Target Audience</label>
+            <select id="targetAudience">
+              <option value="homeowners">Homeowners</option>
+              <option value="business_owners">Business Owners</option>
+              <option value="families">Families</option>
+              <option value="professionals">Professionals</option>
+              <option value="small_business_owners">Small Business Owners</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="marketingGoal">Primary Service</label>
+            <select id="marketingGoal">
+              <option value="emergency_service">Emergency Services</option>
+              <option value="maintenance">Regular Maintenance</option>
+              <option value="consultation">Consultation & Quotes</option>
+              <option value="installation">Installation & Setup</option>
+              <option value="new clients">New Clients</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="seasonalTiming">Season Priority</label>
+            <select id="seasonalTiming">
+              <option value="year_round">Year-Round Services</option>
+              <option value="spring">Spring (Mar–May)</option>
+              <option value="summer">Summer (Jun–Aug)</option>
+              <option value="fall">Fall (Sep–Nov)</option>
+              <option value="winter">Winter (Dec–Feb)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="painPoint">Common Problem</label>
+            <input id="painPoint" placeholder="e.g., messy books, storm damage"/>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="layoutStyle">Layout</label>
+            <select id="layoutStyle">
+              <option value="card-left">Card Left</option>
+              <option value="card-right">Card Right</option>
+              <option value="centered">Centered</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="button-group">
+          <button type="button" id="btn-generate-copy">Generate Ad Copy</button>
+          <button type="button" id="generateBtn" disabled>Create Facebook Ad</button>
+          <button type="button" id="downloadBtn" class="secondary-btn" style="display:none;">Download PNG</button>
+          <button type="button" id="copyUrlBtn" class="secondary-btn">Copy URL</button>
+        </div>
+      </form>
+
+      <div class="copy-preview" id="copyPreview">
+        <h3>Your Ad Copy (Click to Edit)</h3>
+        <div id="copyContent"></div>
+      </div>
+
+      <div class="canvas-container">
+        <canvas id="canvas" width="1200" height="630"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ============= Dynamic Brief Loader =============
+    const paramMap = {
+      company: 'companyName',
+      phone: 'phoneNumber',
+      industry: 'industry',
+      serviceArea: 'serviceArea',
+      hex: 'primaryColor',
+      hex2: 'secondaryColor',
+      ad: 'adType',
+      audience: 'targetAudience',
+      goal: 'marketingGoal',
+      season: 'seasonalTiming',
+      pain: 'painPoint',
+      layout: 'layoutStyle'
+    };
+
+    function ensureHash(v){ if(!v) return v; return v.startsWith('#')?v:'#'+v; }
+
+    function populateFromURL(){
+      const qs = new URLSearchParams(location.search);
+      let changed=false;
+      for(const [q,id] of Object.entries(paramMap)){
+        const val = qs.get(q);
+        if(val!==null && val!==''){
+          const el = document.getElementById(id);
+          if(!el) continue;
+          el.value = (id==='primaryColor'||id==='secondaryColor') ? ensureHash(val) : val;
+          changed=true;
+        }
+      }
+      return changed || qs.get('autorun')==='1';
+    }
+
+    // ============= Palette =============
+    let currentPalette = {};
+    function generateColorPalette(){
+      const primary = document.getElementById('primaryColor').value || '#667eea';
+      const secondary = document.getElementById('secondaryColor').value || '#764ba2';
+      currentPalette = {
+        background: primary,
+        backgroundGradient: adjustLightness(primary,-0.2),
+        accent: secondary || '#3498db',
+        text: '#F8FAFC'
+      };
+    }
+    function adjustLightness(hex, adj){
+      const m = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+      if(!m) return hex;
+      let [r,g,b] = [parseInt(m[1],16), parseInt(m[2],16), parseInt(m[3],16)];
+      r/=255; g/=255; b/=255;
+      const max=Math.max(r,g,b), min=Math.min(r,g,b);
+      let h,s,l=(max+min)/2;
+      if(max===min){ h=s=0; } else {
+        const d=max-min;
+        s = l>0.5 ? d/(2-max-min) : d/(max+min);
+        switch(max){
+          case r: h=(g-b)/d + (g<b?6:0); break;
+          case g: h=(b-r)/d + 2; break;
+          case b: h=(r-g)/d + 4; break;
+        }
+        h/=6;
+      }
+      l=Math.max(0,Math.min(1,l+adj));
+      function hue2rgb(p,q,t){ if(t<0)t+=1; if(t>1)t-=1; if(t<1/6)return p+(q-p)*6*t; if(t<1/2)return q; if(t<2/3)return p+(q-p)*(2/3-t)*6; return p; }
+      let r2,g2,b2;
+      if(s===0){ r2=g2=b2=l; } else {
+        const q = l<.5 ? l*(1+s) : l+s-l*s;
+        const p = 2*l-q;
+        r2=hue2rgb(p,q,h+1/3); g2=hue2rgb(p,q,h); b2=hue2rgb(p,q,h-1/3);
+      }
+      const toHex=c=>{ const x=Math.round(c*255).toString(16); return x.length===1?'0'+x:x; };
+      return '#'+toHex(r2)+toHex(g2)+toHex(b2);
+    }
+
+    // ============= Copy Generator (Local, no API) =============
+    let currentCopySet=[], selectedVariation=0;
+
+    function serviceName(industry){
+      const map={ hvac:"HVAC Service", plumbing:"Plumbing Service", electrical:"Electrical Service", roofing:"Roofing Service",
+        landscaping:"Landscaping Service", cleaning:"Cleaning Service", automotive:"Auto Service", dental:"Dental Care",
+        medical:"Medical Care", legal:"Legal Service", real_estate:"Real Estate Service", restaurant:"Restaurant Service",
+        retail:"Retail Service", fitness:"Fitness Service", beauty:"Beauty Service", pet_services:"Pet Service",
+        home_services:"Home Service", dock_repair:"Dock Repair Service", professional:"Professional Service" };
+      return map[industry]||"Professional Service";
+    }
+
+    function genHeadline(type, industry, company, area){
+      const s = serviceName(industry);
+      if(type==='professional'){
+        const opts=[`Professional ${s} You Can Trust`,`Licensed ${s} Serving ${area||'Your Area'}`,`${company||'Your Company'} — ${s} Experts`];
+        return opts[Math.floor(Math.random()*opts.length)];
+      }
+      if(type==='trustworthy'){
+        const opts=[`Trusted by 500+ Local Customers`,`Licensed ${s} Since 2004`,`Your Local ${s} Specialists`];
+        return opts[Math.floor(Math.random()*opts.length)];
+      }
+      const opts=[`${s} Emergency? We're On Our Way!`,`24/7 Emergency ${s}`,`Fast, Reliable ${s} Solutions`];
+      return opts[Math.floor(Math.random()*opts.length)];
+    }
+
+    function genSubhead(type, industry, area){
+      const s = serviceName(industry);
+      if(type==='professional') return `Professional ${s.toLowerCase()} for residential and commercial properties in ${area||'your area'}.`;
+      if(type==='trustworthy') return `Years of reliable ${s.toLowerCase()} across ${area||'the region'}. Licensed, insured, satisfaction guaranteed.`;
+      return `When you need ${s.toLowerCase()} fast, we're here 24/7 with upfront pricing and guaranteed satisfaction.`;
+    }
+
+    function genValueProp(){
+      const list=[
+        "Licensed experts with years of local experience",
+        "Same-day emergency service when you need it most",
+        "Upfront pricing with no hidden fees",
+        "Fully insured with satisfaction guaranteed"
+      ];
+      return list[Math.floor(Math.random()*list.length)];
+    }
+
+    function genCTA(type){
+      if(type==='professional') return ["Request Your Free Quote","Schedule Service Today","Get Your Free Estimate"][Math.floor(Math.random()*3)];
+      if(type==='trustworthy') return ["Join 500+ Satisfied Customers","Call the Local Experts","Get Your Guaranteed Quote"][Math.floor(Math.random()*3)];
+      return ["Get Emergency Service Now","Call for Immediate Help","Schedule Urgent Repair"][Math.floor(Math.random()*3)];
+    }
+
+    function generateCopy(){
+      const company = document.getElementById('companyName').value.trim();
+      const industry = document.getElementById('industry').value;
+      const area = document.getElementById('serviceArea').value.trim();
+      const type = document.getElementById('adType').value;
+
+      if(!company){ alert('Please enter your company name first!'); return; }
+
+      const copy = {
+        headline: genHeadline(type, industry, company, area).slice(0, 60),
+        subhead: genSubhead(type, industry, area).slice(0, 180),
+        valueProp: genValueProp(),
+        cta: genCTA(type)
+      };
+      currentCopySet=[copy]; selectedVariation=0;
+      renderCopy();
+      document.getElementById('generateBtn').disabled=false;
+    }
+
+    function renderCopy(){
+      const c = currentCopySet[0];
+      const phone = document.getElementById('phoneNumber').value;
+      const html = `
+        <div class="copy-item">
+          <strong>Headline:</strong>
+          <textarea class="copy-edit headline" onchange="updateCopy('headline', this.value)">${c.headline}</textarea>
+          <div class="copy-stats">Character count: ${c.headline.length}/60</div>
+        </div>
+        <div class="copy-item">
+          <strong>Description:</strong>
+          <textarea class="copy-edit" onchange="updateCopy('subhead', this.value)">${c.subhead}</textarea>
+          <div class="copy-stats">Character count: ${c.subhead.length}/180</div>
+        </div>
+        <div class="copy-item">
+          <strong>Value Proposition:</strong>
+          <textarea class="copy-edit" onchange="updateCopy('valueProp', this.value)">${c.valueProp}</textarea>
+        </div>
+        <div class="copy-item">
+          <strong>Call to Action:</strong>
+          <input class="copy-edit" value="${c.cta}" onchange="updateCopy('cta', this.value)"/>
+        </div>
+        <div class="copy-item">
+          <strong>Contact:</strong>
+          <input class="copy-edit" value="${phone}" readonly/>
+          <div class="edit-hint">Update phone number in the form above</div>
+        </div>`;
+      document.getElementById('copyContent').innerHTML = html;
+      document.getElementById('copyPreview').style.display='block';
+    }
+
+    function updateCopy(field, value){
+      currentCopySet[0][field]=value;
+    }
+
+    // ============= Canvas Renderer =============
+    let canvas, ctx;
+    function roundRect(ctx,x,y,w,h,r){ ctx.beginPath(); ctx.moveTo(x+r,y); ctx.lineTo(x+w-r,y); ctx.quadraticCurveTo(x+w,y,x+w,y+r); ctx.lineTo(x+w,y+h-r); ctx.quadraticCurveTo(x+w,y+h,x+w-r,y+h); ctx.lineTo(x+r,y+h); ctx.quadraticCurveTo(x,y+h,x,y+h-r); ctx.lineTo(x,y+r); ctx.quadraticCurveTo(x,y,x+r,y); ctx.closePath(); }
+
+    function generateImage(){
+      if(!currentCopySet.length){ alert('Generate ad copy first'); return; }
+      if(!canvas){ canvas=document.getElementById('canvas'); ctx=canvas.getContext('2d'); }
+      if(!currentPalette.background) generateColorPalette();
+
+      const copy=currentCopySet[0];
+      const company=document.getElementById('companyName').value.trim();
+      const phone=document.getElementById('phoneNumber').value.trim();
+      const industry=document.getElementById('industry').value;
+      const area=document.getElementById('serviceArea').value.trim();
+
+      const leftW = canvas.width*0.55;
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+
+      // Gradient bg
+      const g=ctx.createLinearGradient(0,0,canvas.width,canvas.height);
+      g.addColorStop(0,currentPalette.background);
+      g.addColorStop(.5,currentPalette.backgroundGradient);
+      g.addColorStop(1,currentPalette.accent);
+      ctx.fillStyle=g; ctx.fillRect(0,0,canvas.width,canvas.height);
+
+      // Left
+      ctx.textAlign='left';
+      let y=80;
+      ctx.fillStyle=currentPalette.text;
+      ctx.font='bold 56px Arial, sans-serif';
+      let name=company.toUpperCase();
+      while(ctx.measureText(name).width > leftW-120){ // shrink if too long
+        const f=parseInt(ctx.font.match(/\d+/)[0],10)-4; if(f<28) break; ctx.font=`bold ${f}px Arial, sans-serif`;
+      }
+      ctx.fillText(name,60,y); y+=60;
+
+      ctx.font='24px Arial, sans-serif';
+      const sName = serviceName(industry);
+      ctx.globalAlpha=.9;
+      ctx.fillText(area?`Professional ${sName} • Serving ${area}`:`Professional ${sName}`, 60, y);
+      ctx.globalAlpha=1; y+=80;
+
+      // Headline wrap
+      ctx.font='bold 38px Arial, sans-serif';
+      const words=copy.headline.split(' ');
+      let line='';
+      const maxW=leftW-120;
+      for(const w of words){
+        const test=line+w+' ';
+        if(ctx.measureText(test).width>maxW && line!==''){ ctx.fillText(line.trim(),60,y); y+=45; line=w+' '; }
+        else line=test;
+      }
+      if(line.trim()){ ctx.fillText(line.trim(),60,y); y+=70; }
+
+      // Value prop box
+      const vp=copy.valueProp;
+      const boxW=leftW-120, x=60, y0=y-15;
+      ctx.font='bold 20px Arial, sans-serif';
+      const vpWords=vp.split(' ');
+      let tmp='', lines=[];
+      for(const w of vpWords){
+        const t=tmp+w+' ';
+        if(ctx.measureText(t).width>boxW-30 && tmp!==''){ lines.push(tmp.trim()); tmp=w+' '; }
+        else tmp=t;
+      }
+      if(tmp.trim()) lines.push(tmp.trim());
+      const lh=24, boxH=Math.max(60, lines.length*lh+30);
+      ctx.fillStyle='rgba(255,215,0,.15)'; roundRect(ctx,x,y0,boxW,boxH,12); ctx.fill();
+      ctx.strokeStyle=currentPalette.accent; ctx.lineWidth=2; roundRect(ctx,x,y0,boxW,boxH,12); ctx.stroke();
+      ctx.fillStyle=currentPalette.text;
+      let yy=y+8; for(const ln of lines){ ctx.fillText(ln,x+15,yy); yy+=lh; }
+
+      // Right card
+      const cardX=leftW+40, cardY=120, cardW=canvas.width-cardX-40, cardH=350;
+      ctx.fillStyle='rgba(0,0,0,.3)'; roundRect(ctx,cardX+8,cardY+8,cardW,cardH,20); ctx.fill();
+      ctx.fillStyle='#fff'; roundRect(ctx,cardX,cardY,cardW,cardH,20); ctx.fill();
+
+      ctx.textAlign='center'; const cx=cardX+cardW/2; let cy=cardY+50;
+      ctx.fillStyle=currentPalette.background; ctx.font='bold 18px Arial, sans-serif'; ctx.fillText('PROFESSIONAL SERVICE', cx, cy); cy+=40;
+
+      ctx.fillStyle='#2C3E50'; ctx.font='bold 22px Arial, sans-serif';
+      const descWords=copy.subhead.split(' '); let dline=''; const maxCW=cardW-30;
+      for(const w of descWords){ const t=dline+w+' '; if(ctx.measureText(t).width>maxCW && dline!==''){ ctx.fillText(dline.trim(),cx,cy); cy+=28; dline=w+' '; } else dline=t; }
+      if(dline.trim()){ ctx.fillText(dline.trim(),cx,cy); cy+=45; }
+
+      ctx.fillStyle=currentPalette.background; ctx.font='bold 30px Arial, sans-serif'; ctx.fillText(phone||' ', cx, cy); cy+=55;
+
+      const btnW=cardW-40, btnH=55, btnX=cardX+20, btnY=cy;
+      const bg=ctx.createLinearGradient(btnX,btnY,btnX,btnY+btnH); bg.addColorStop(0,currentPalette.background); bg.addColorStop(1,currentPalette.backgroundGradient);
+      ctx.fillStyle=bg; roundRect(ctx,btnX,btnY,btnW,btnH,15); ctx.fill();
+      ctx.fillStyle='#fff'; ctx.font='bold 18px Arial, sans-serif';
+      let btnText='CALL NOW'; const c=copy.cta.toLowerCase(); if(c.includes('quote')) btnText='GET QUOTE'; else if(c.includes('estimate')) btnText='GET ESTIMATE'; else if(c.includes('schedule')) btnText='SCHEDULE NOW';
+      ctx.fillText(btnText, cx, btnY+35);
+
+      // Trust bullets
+      ctx.textAlign='left'; ctx.fillStyle='rgba(255,255,255,.9)'; ctx.font='16px Arial, sans-serif';
+      ctx.fillText('✓ Licensed & Insured', 60, canvas.height - 60);
+      ctx.fillText('✓ Same-Day Service Available', 60, canvas.height - 40);
+      ctx.fillText('✓ Satisfaction Guaranteed', 60, canvas.height - 20);
+
+      document.getElementById('downloadBtn').style.display='inline-block';
+    }
+
+    function downloadImage(){
+      const link=document.createElement('a');
+      const company=document.getElementById('companyName').value||'business';
+      link.download=`${company.replace(/\s+/g,'-').toLowerCase()}-facebook-ad.png`;
+      link.href=document.getElementById('canvas').toDataURL();
+      link.click();
+    }
+
+    function copyShareableURL(){
+      const base = location.origin + location.pathname;
+      const qs = new URLSearchParams();
+      for(const [q,id] of Object.entries(paramMap)){
+        const el=document.getElementById(id);
+        if(!el) continue;
+        let v=el.value?.trim(); if(!v) continue;
+        if(id==='primaryColor'||id==='secondaryColor') v=v.replace(/^#/,'');
+        qs.set(q, v);
+      }
+      const url = base + '?' + qs.toString();
+      navigator.clipboard?.writeText(url).then(()=>alert('Shareable URL copied!')).catch(()=>alert(url));
+    }
+
+    // Wire up buttons
+    document.getElementById('btn-generate-copy').addEventListener('click', generateCopy);
+    document.getElementById('generateBtn').addEventListener('click', generateImage);
+    document.getElementById('downloadBtn').addEventListener('click', downloadImage);
+    document.getElementById('copyUrlBtn').addEventListener('click', copyShareableURL);
+
+    // Init
+    window.addEventListener('DOMContentLoaded', ()=>{
+      const shouldRun = populateFromURL();
+      generateColorPalette();
+      if(shouldRun){ generateCopy(); setTimeout(()=>{ try{ generateImage(); }catch(e){} }, 200); }
+    });
+	// ===== Load industry presets from presets.json =====
+let industryPresets = {};
+
+async function loadPresets() {
+  try {
+    const response = await fetch('presets.json');
+    industryPresets = await response.json();
+    console.log("Presets loaded:", industryPresets);
+
+    const autorun = urlParams.get("autorun");
+    if (autorun === "1") {
+      const industryKey = urlParams.get("industry");
+      if (industryKey && industryPresets[industryKey]) {
+        applyPreset(industryKey);
+        generateSpecificCopy();
+      }
+    }
+  } catch (error) {
+    console.error("Error loading presets:", error);
+  }
+}
+
+function applyPreset(industryKey) {
+  const preset = industryPresets[industryKey];
+  if (!preset) return;
+
+  document.getElementById("mainTitle").textContent =
+    preset.friendly_name + " Facebook Ad Generator";
+  document.getElementById("industryBadge").textContent = preset.friendly_name;
+
+  if (preset.audiences) updateSelectOptions("targetAudience", preset.audiences);
+  if (preset.primary_goals) updateSelectOptions("marketingGoal", preset.primary_goals);
+  if (preset.common_pain_points) updateSelectOptions("painPoint", preset.common_pain_points);
+}
+
+function updateSelectOptions(selectId, options) {
+  const select = document.getElementById(selectId);
+  select.innerHTML = "";
+  options.forEach(opt => {
+    const o = document.createElement("option");
+    o.value = opt.id;
+    o.textContent = opt.label;
+    select.appendChild(o);
+  });
+}
+
+// Kick off preset loading
+window.addEventListener("DOMContentLoaded", loadPresets);
+
+  </script>
+</body>
+</html>
