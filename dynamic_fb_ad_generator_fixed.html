@@ -587,6 +587,15 @@ document.getElementById('bgImage')?.addEventListener('change', (e) => {
   };
   img.src = url;
 });
+// Convert HEX like "#338D8C" into rgba() with transparency
+function hexToRgba(hex, alpha = 1) {
+  const m = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+  if (!m) return `rgba(0,0,0,${alpha})`;
+  const r = parseInt(m[1],16),
+        g = parseInt(m[2],16),
+        b = parseInt(m[3],16);
+  return `rgba(${r},${g},${b},${alpha})`;
+}
 
 // ========== Init ==========
 window.addEventListener('DOMContentLoaded', () => {
