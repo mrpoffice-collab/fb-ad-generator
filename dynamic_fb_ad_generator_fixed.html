@@ -696,20 +696,16 @@ function updateSelectOptions(selectId, options) {
 window.addEventListener("DOMContentLoaded", loadPresets);
 
   </script>
+<!-- put this just before </body> -->
+<script>
 /* ======== RESCUE PATCH (safe to paste at end of script) ======== */
-
-/* 1) Show any runtime error on the page so you can see what's wrong */
 (function attachErrorBanner(){
   let banner;
   window.addEventListener('error', (e)=>{
     try{
       if(!banner){
         banner = document.createElement('div');
-        banner.style.cssText = `
-          position:fixed;left:0;right:0;bottom:0;z-index:99999;
-          background:#fee;border-top:2px solid #c00;color:#900;
-          font:14px/1.4 system-ui, -apple-system, Segoe UI, Roboto, Arial;
-          padding:10px 14px;white-space:pre-wrap`;
+        banner.style.cssText = 'position:fixed;left:0;right:0;bottom:0;z-index:99999;background:#fee;border-top:2px solid #c00;color:#900;font:14px/1.4 system-ui,-apple-system,Segoe UI,Roboto,Arial;padding:10px 14px;white-space:pre-wrap';
         document.body.appendChild(banner);
       }
       const loc = `${e.filename?.split('/').pop()||''}:${e.lineno||''}`;
@@ -718,59 +714,34 @@ window.addEventListener("DOMContentLoaded", loadPresets);
   });
 })();
 
-/* Helper: best-effort button finder by label text (case-insensitive) */
 function findButtonByText(label){
   label = (label||'').trim().toLowerCase();
-  const btns = Array.from(document.querySelectorAll('button, [role="button"], input[type="button"], input[type="submit"]'));
+  const btns = Array.from(document.querySelectorAll('button,[role="button"],input[type="button"],input[type="submit"]'));
   return btns.find(b => (b.value||b.textContent||'').trim().toLowerCase() === label) || null;
 }
 
-/* 2) Re-wire buttons (by ID if present, else by visible label text) */
 (function wireButtons(){
   try{
-    const genCopyBtn =
-      document.getElementById('btn-generate-copy') ||
-      findButtonByText('generate ad copy');
+    const genCopyBtn  = document.getElementById('btn-generate-copy') || findButtonByText('generate ad copy');
+    const createAdBtn = document.getElementById('generateBtn')       || findButtonByText('create facebook ad');
+    const downloadBtn = document.getElementById('downloadBtn')       || findButtonByText('download');
+    const copyUrlBtn  = document.getElementById('copyUrlBtn')        || findButtonByText('copy url');
 
-    const createAdBtn =
-      document.getElementById('generateBtn') ||
-      findButtonByText('create facebook ad');
-
-    const downloadBtn =
-      document.getElementById('downloadBtn') ||
-      findButtonByText('download');
-
-    const copyUrlBtn =
-      document.getElementById('copyUrlBtn') ||
-      findButtonByText('copy url');
-
-    if (genCopyBtn && typeof generateSpecificCopy === 'function') {
-      genCopyBtn.onclick = ()=>{ try{ generateSpecificCopy(); }catch(e){ console.error(e);} };
-    }
-    if (createAdBtn && typeof generateImage === 'function') {
-      createAdBtn.onclick = ()=>{ try{ generateImage(); }catch(e){ console.error(e);} };
-    }
-    if (downloadBtn && typeof downloadImage === 'function') {
-      downloadBtn.onclick = ()=>{ try{ downloadImage(); }catch(e){ console.error(e);} };
-    }
-    if (copyUrlBtn && typeof copyShareableURL === 'function') {
-      copyUrlBtn.onclick = ()=>{ try{ copyShareableURL(); }catch(e){ console.error(e);} };
-    }
+    if (genCopyBtn  && typeof generateSpecificCopy === 'function') genCopyBtn.onclick  = ()=>{ try{ generateSpecificCopy(); }catch(e){ console.error(e);} };
+    if (createAdBtn && typeof generateImage       === 'function') createAdBtn.onclick = ()=>{ try{ generateImage(); }catch(e){ console.error(e);} };
+    if (downloadBtn && typeof downloadImage       === 'function') downloadBtn.onclick = ()=>{ try{ downloadImage(); }catch(e){ console.error(e);} };
+    if (copyUrlBtn  && typeof copyShareableURL    === 'function') copyUrlBtn.onclick  = ()=>{ try{ copyShareableURL(); }catch(e){ console.error(e);} };
   }catch(e){ console.error('wireButtons failed', e); }
 })();
 
-/* 3) Force repaint when colors change (works even if IDs differ) */
 (function wireColorPickers(){
   try{
-    const primary = document.getElementById('primaryColor') ||
-                    document.querySelector('input[type="color"]');
-    const secondary = document.getElementById('secondaryColor') ||
-                      document.querySelectorAll('input[type="color"]')[1];
-
+    const primary   = document.getElementById('primaryColor')   || document.querySelector('input[type="color"]');
+    const secondary = document.getElementById('secondaryColor') || document.querySelectorAll('input[type="color"]')[1];
     function repaint(){
       try{
         if (typeof generateColorPalette === 'function') generateColorPalette();
-        if (typeof generateImage === 'function') generateImage();
+        if (typeof generateImage       === 'function') generateImage();
       }catch(e){ console.error(e); }
     }
     if (primary)   primary.addEventListener('input', repaint);
@@ -778,11 +749,9 @@ function findButtonByText(label){
   }catch(e){ console.error('wireColorPickers failed', e); }
 })();
 
-/* 4) Background image rewire (first file input wins) */
 (function wireBackgroundFile(){
   try{
-    const file = document.getElementById('bgImage') ||
-                 document.querySelector('input[type="file"]');
+    const file = document.getElementById('bgImage') || document.querySelector('input[type="file"]');
     if(!file) return;
     file.addEventListener('change', (ev)=>{
       const f = ev.target.files && ev.target.files[0];
@@ -799,13 +768,13 @@ function findButtonByText(label){
   }catch(e){ console.error('wireBackgroundFile failed', e); }
 })();
 
-/* 5) On first load, try to repaint once if functions exist */
 (function firstPaint(){
   try{
     if (typeof generateColorPalette === 'function') generateColorPalette();
-    if (typeof generateImage === 'function') generateImage();
+    if (typeof generateImage       === 'function') generateImage();
   }catch(e){ console.error(e); }
 })();
+</script>
 
 </body>
 </html>
