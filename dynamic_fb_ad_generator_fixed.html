@@ -304,7 +304,7 @@ function serviceName(industry){
 
 
     function genHeadline(type, industry, company, area){
-      const s = serviceName(industry);
+      const s = displayServiceName(industry);
       if(type==='professional'){
         const opts=[`Professional ${s} You Can Trust`,`Licensed ${s} Serving ${area||'Your Area'}`,`${company||'Your Company'} — ${s} Experts`];
         return opts[Math.floor(Math.random()*opts.length)];
@@ -318,7 +318,7 @@ function serviceName(industry){
     }
 
     function genSubhead(type, industry, area){
-      const s = serviceName(industry);
+      const s = displayServiceName(industry);
       if(type==='professional') return `Professional ${s.toLowerCase()} for residential and commercial properties in ${area||'your area'}.`;
       if(type==='trustworthy') return `Years of reliable ${s.toLowerCase()} across ${area||'the region'}. Licensed, insured, satisfaction guaranteed.`;
       return `When you need ${s.toLowerCase()} fast, we're here 24/7 with upfront pricing and guaranteed satisfaction.`;
