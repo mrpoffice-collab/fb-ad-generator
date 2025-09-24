@@ -258,14 +258,50 @@
     // ============= Copy Generator (Local, no API) =============
     let currentCopySet=[], selectedVariation=0;
 
-    function serviceName(industry){
-      const map={ hvac:"HVAC Service", plumbing:"Plumbing Service", electrical:"Electrical Service", roofing:"Roofing Service",
-        landscaping:"Landscaping Service", cleaning:"Cleaning Service", automotive:"Auto Service", dental:"Dental Care",
-        medical:"Medical Care", legal:"Legal Service", real_estate:"Real Estate Service", restaurant:"Restaurant Service",
-        retail:"Retail Service", fitness:"Fitness Service", beauty:"Beauty Service", pet_services:"Pet Service",
-        home_services:"Home Service", dock_repair:"Dock Repair Service", professional:"Professional Service" };
-      return map[industry]||"Professional Service";
-    }
+    // Prefer the friendly_name from presets.json when available
+function displayServiceName(industry) {
+  if (window.industryPresets && industryPresets[industry]?.friendly_name) {
+    return industryPresets[industry].friendly_name;
+  }
+  return serviceName(industry);
+}
+
+// Fallback map for when presets.json isn’t loaded
+function serviceName(industry){
+  const map = {
+    hvac: "HVAC Service",
+    plumbing: "Plumbing Service",
+    electrical: "Electrical Service",
+    roofing: "Roofing Service",
+    landscaping: "Landscaping Service",
+    cleaning: "Cleaning Service",
+    automotive: "Auto Service",
+    dental: "Dental Care",
+    medical: "Medical Care",
+    legal: "Legal Service",
+    real_estate: "Real Estate Service",
+    restaurant: "Restaurant Service",
+    retail: "Retail Service",
+    fitness: "Fitness Service",
+    beauty: "Beauty Service",
+    pet_services: "Pet Service",
+    home_services: "Home Service",
+    dock_repair: "Dock Repair Service",
+    professional: "Professional Service",
+
+    // ✅ Your combined categories
+    property_home_maintenance: "Property & Home Maintenance",
+    plumbing_hvac_electrical: "Plumbing, HVAC & Electrical",
+    cleaning_restoration: "Cleaning & Restoration",
+    remodeling_construction: "Remodeling & Construction",
+    roofing_exterior: "Roofing & Exterior Services",
+    flooring_interior: "Flooring & Interior Finishes",
+    landscape_outdoor: "Lawn, Landscape & Outdoor",
+    lake_specialty: "Specialty Lake-Area Services"
+  };
+  return map[industry] || "Professional Service";
+}
+
 
     function genHeadline(type, industry, company, area){
       const s = serviceName(industry);
