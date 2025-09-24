@@ -468,11 +468,14 @@ if (backgroundImg) {
       }
       ctx.fillText(name,60,y); y+=60;
 
-      ctx.font='24px Arial, sans-serif';
-      const sName = serviceName(industry);
-      ctx.globalAlpha=.9;
-      ctx.fillText(area?`Professional ${sName} • Serving ${area}`:`Professional ${sName}`, 60, y);
-      ctx.globalAlpha=1; y+=80;
+    ctx.font = '24px Arial, sans-serif';
+const sName = displayServiceName(industry);
+const lead  = needsProfessionalPrefix(sName) ? `Professional ${sName}` : sName;
+ctx.globalAlpha = .9;
+ctx.fillText(area ? `${lead} • Serving ${area}` : lead, 60, y);
+ctx.globalAlpha = 1.0;
+y += 80;
+
 
       // Headline wrap
       ctx.font='bold 38px Arial, sans-serif';
