@@ -429,12 +429,33 @@ function needsProfessionalPrefix(serviceLabel){
       const leftW = canvas.width*0.55;
       ctx.clearRect(0,0,canvas.width,canvas.height);
 
-      // Gradient bg
-      const g=ctx.createLinearGradient(0,0,canvas.width,canvas.height);
-      g.addColorStop(0,currentPalette.background);
-      g.addColorStop(.5,currentPalette.backgroundGradient);
-      g.addColorStop(1,currentPalette.accent);
-      ctx.fillStyle=g; ctx.fillRect(0,0,canvas.width,canvas.height);
+      // --- BACKGROUND: photo if provided, else gradient ---
+if (backgroundImg) {
+  const cw = canvas.width, ch = canvas.height;
+  const iw = backgroundImg.width, ih = backgroundImg.height;
+
+  // cover-fit scaling
+  const scale = Math.max(cw / iw, ch / ih);
+  const sw = iw * scale, sh = ih * scale;
+  const dx = (cw - sw) / 2, dy = (ch - sh) / 2;
+
+  ctx.globalAlpha = 1;
+  ctx.drawImage(backgroundImg, dx, dy, sw, sh);
+
+  // overlay to keep text readable
+  const overlay = ctx.createLinearGradient(0, 0, 0, ch);
+  overlay.addColorStop(0, hexToRgba(currentPalette.background, 0.55));
+  overlay.addColorStop(1, hexToRgba(currentPalette.accent, 0.55));
+  ctx.fillStyle = overlay;
+  ctx.fillRect(0, 0, cw, ch);
+} else {
+  const g = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+  g.addColorStop(0, currentPalette.background);
+  g.addColorStop(0.5, currentPalette.backgroundGradient);
+  g.addColorStop(1, currentPalette.accent);
+  ctx.fillStyle = g;
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+}
 
       // Left
       ctx.textAlign='left';
